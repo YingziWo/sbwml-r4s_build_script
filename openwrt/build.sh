@@ -24,15 +24,17 @@ endgroup() {
 #  NanoPi R4S OpenWrt Build Script  #
 #####################################
 
-# IP Location
+# IP Location  #检测使用者IP所在地处在什么区域，下面具体的操作区分了两类，一类是CN的ip地址，一类为非CN的ip地址。根据ip区域提供不同的源目标位置。
 ip_info=`curl -sk https://ip.cooluc.com`;
 [ -n "$ip_info" ] && export isCN=`echo $ip_info | grep -Po 'country_code\":"\K[^"]+'` || export isCN=US
 
 # script url
 if [ "$isCN" = "CN" ]; then
-    export mirror=init.cooluc.com
+    #export mirror=init.cooluc.com
+    export mirror=raw.githubusercontent.com/YingziWo/sbwml-r4s_build_script/master
 else
-    export mirror=init2.cooluc.com
+    #export mirror=init2.cooluc.com
+    export mirror=raw.githubusercontent.com/YingziWo/sbwml-r4s_build_script/master
 fi
 
 # github actions - automatically retrieve `github raw` links
