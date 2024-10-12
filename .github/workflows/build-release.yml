@@ -125,5 +125,5 @@ jobs:
         tag: ${{ env.latest_release }}
         commit: master
         replacesArtifacts: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.REPO_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*
