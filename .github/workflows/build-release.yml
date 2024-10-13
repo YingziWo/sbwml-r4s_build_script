@@ -128,6 +128,6 @@ jobs:
         allowUpdates: true
         tag: ${{ env.latest_release }}
         commit: master
-        replacesArtifacts: true
+        replacesArtifacts: false
         token: ${{ secrets.REPO_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*
