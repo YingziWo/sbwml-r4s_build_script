@@ -20,6 +20,9 @@ on:
         default: 'BUILD_FAST=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_MOLD=y KERNEL_CLANG_LTO=y USE_GCC14=y'
         type: string
 
+env:
+  UPLOAD_RELEASE: true
+
 jobs:
   build:
     name: Build ${{ github.event.inputs.device }}
@@ -120,14 +123,39 @@ jobs:
         name: ${{ github.event.inputs.device }}-openwrt-${{ env.latest_release }}
         path: ${{ env.WORKDIR }}/rom/*
 
-    - name: Create release
+    #- name: Create release
+    #  continue-on-error: true
+    #  uses: ncipollo/release-action@v1
+    #  with:
+    #    name: OpenWrt-${{ env.latest_release }}
+    #    allowUpdates: true
+     #   tag: ${{ env.latest_release }}
+    #    commit: master
+     #   replacesArtifacts: true
+     #   token: ${{ secrets.REPO_TOKEN }}
+     #   artifacts: ${{ env.WORKDIR }}/rom/*
+
+    - name: Generate release tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        touch release.txt
+        [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
+       # echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: Upload firmware to release
       continue-on-error: true
-      uses: ncipollo/release-action@v1
+      uses: softprops/action-gh-release@master
+      #if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        name: OpenWrt-${{ env.latest_release }}
-        allowUpdates: true
-        tag: ${{ env.latest_release }}
-        commit: master
-        replacesArtifacts: false
-        token: ${{ secrets.REPO_TOKEN }}
-        artifacts: ${{ env.WORKDIR }}/rom/*
+        tag_name: ${{ github.event.inputs.device }}-openwrt-${{ env.latest_release }}
+        body_path: release.txt
+        files: ${{ env.WORKDIR }}/rom/*
+        body: |
+            ### 📒 编译固件信息
+          - 💻 平台架构: ${{ github.event.inputs.device }}                                                                 
+          - 🌐 默认地址: 10.0.0.1
+          - 🔑 默认密码: 空           
