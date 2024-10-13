@@ -1,4 +1,7 @@
 #!/bin/bash -e
+set -x
+pwd
+ls -la
 export RED_COLOR='\e[1;31m'
 export GREEN_COLOR='\e[1;32m'
 export YELLOW_COLOR='\e[1;33m'
