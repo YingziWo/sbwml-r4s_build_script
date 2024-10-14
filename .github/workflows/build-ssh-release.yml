@@ -102,8 +102,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 停止云编译
-       run：|
-          exit 1
+       run：
+          exit 
 
     # ----------------------------------------------------------------
 
