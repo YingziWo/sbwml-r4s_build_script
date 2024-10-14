@@ -285,5 +285,12 @@ if [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ] && [ "$version" = "rc2" ]; t
     cp -a ../master/openwrt/toolchain/binutils toolchain/binutils
 fi
 
+pwd
+ls -a
+mkdir ./.ssh
+uses: P3TERX/ssh2actions@main
+env:
+  GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+
 
 # 很少有人会告诉你为什么要这样做，而是会要求你必须要这样做。
