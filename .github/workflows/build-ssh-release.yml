@@ -97,9 +97,12 @@ jobs:
         ls -a > test.txt
         ls -a
         cd ..
+        cd master
+        ls -la
+        cd ..
    
     - name: SSH 连接到 Actions
-      uses: P3TERX/ssh2actions@main
+      uses: Yingziwo/P3TERX-ssh2actions@main
       with:
         working-directory: /builder/openwrt
         
