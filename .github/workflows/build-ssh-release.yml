@@ -90,7 +90,10 @@ jobs:
         pwd
         ls -a
         mkdir -m 755 ./.ssh
+        ls -a
         cd ./.ssh
+        ls -a > test.txt
+        ls -a
    
     - name: SSH 连接到 Actions
       uses: P3TERX/ssh2actions@main
