@@ -199,7 +199,7 @@ fi
 # openwrt-23.05    # 硬件平台是rc2，则在克隆一个openwrt-23.05的分支到master/openwrt-23.05中
 [ "$1" = "rc2" ] && git clone https://$github/openwrt/openwrt -b openwrt-23.05 master/openwrt-23.05 --depth=1
 
-# immortalwrt master
+# immortalwrt master  #不同平台必须选的源码包，作为上面原码的补充，以更好地适合不同插件的应用 ，若有openwrt的目录，则硬件平台rc2给version.date赋值日期，给编译文件include/version.mk改版本号，再释放key.tar.gz压缩包，再删该文件。若无openwrt目录，下载原码失败，退出云编译。
 git clone https://$github/immortalwrt/packages master/immortalwrt_packages --depth=1
 [ "$(whoami)" = "runner" ] && endgroup
 
