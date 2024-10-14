@@ -89,11 +89,21 @@ jobs:
       run: |
         pwd
         ls -la
+        cd runner
+        ls -la
+        pwd
+        cd ..
+        cd docker
+        ls -la
+        pwd
+        cd ..
+        exit 1
+        
         #cd openwrt
         #ls -la
-        cd /home/runner/work/sbwml-r4s_build_script/sbwml-r4s_build_script/openwrt
-        ls -la
-        mkdir -m 755 ./.ssh
+        #cd /home/runner/work/sbwml-r4s_build_script/sbwml-r4s_build_script/openwrt
+        #ls -la
+        #mkdir -m 755 ./.ssh
     
     - name: SSH 连接到 Actions
       uses: P3TERX/ssh2actions@main
