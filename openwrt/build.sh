@@ -31,7 +31,7 @@ endgroup() {
 ip_info=`curl -sk https://ip.cooluc.com`;
 [ -n "$ip_info" ] && export isCN=`echo $ip_info | grep -Po 'country_code\":"\K[^"]+'` || export isCN=US
 
-# script url
+# script url   # 批命令网址
 if [ "$isCN" = "CN" ]; then
     #export mirror=init.cooluc.com
     export mirror=raw.githubusercontent.com/YingziWo/sbwml-r4s_build_script/master
@@ -40,35 +40,35 @@ else
     export mirror=raw.githubusercontent.com/YingziWo/sbwml-r4s_build_script/master
 fi
 
-# github actions - automatically retrieve `github raw` links
+# github actions - automatically retrieve `github raw` links   # 云编译项目版本选择master
 if [ "$(whoami)" = "runner" ] && [ -n "$GITHUB_REPO" ]; then
     export mirror=raw.githubusercontent.com/$GITHUB_REPO/master
 fi
 
-# private gitea
+# private gitea   #私有 gitea 网址
 export gitea=git.cooluc.com
 
-# github mirror
+# github mirror   #判断云编译的工作区域引用不同的镜像网址，分为cn区域和非cn区域两块
 if [ "$isCN" = "CN" ]; then
     export github="ghp.ci/github.com"
 else
     export github="github.com"
 fi
 
-# Check root
+# Check root   #检查用户为非root用户继续执行，否则退出
 if [ "$(id -u)" = "0" ]; then
     echo -e "${RED_COLOR}Building with root user is not supported.${RES}"
     exit 1
 fi
 
-# Start time
+# Start time   #确定开始云编译的日期和时间，并赋值
 starttime=`date +'%Y-%m-%d %H:%M:%S'`
 CURRENT_DATE=$(date +%s)
 
-# Cpus
+# Cpus     #检查云编译虚拟机的cpu核的数量，并赋值
 cores=`expr $(nproc --all) + 1`
 
-# $CURL_BAR
+# $CURL_BAR   # 云编译的固件具体平台类型？
 if curl --help | grep progress-bar >/dev/null 2>&1; then
     CURL_BAR="--progress-bar";
 fi
@@ -89,7 +89,7 @@ if [ -z "$1" ] || [ "$2" != "nanopi-r4s" -a "$2" != "nanopi-r5s" -a "$2" != "x86
     exit 1
 fi
 
-# Source branch
+# Source branch   # 根据分支的不同选择源码的分支。dev选择openwrt-24.10，而rc2则选择openwrt-23.05的分支
 if [ "$1" = "dev" ]; then
     export branch=master
     export version=snapshots-24.10
@@ -101,17 +101,17 @@ elif [ "$1" = "rc2" ]; then
     export openwrt_version=openwrt-23.05
 fi
 
-# lan
+# lan     #固件的lan口ip地址定义
 [ -n "$LAN" ] && export LAN=$LAN || export LAN=10.0.0.1
 
-# platform
+# platform  #用户所选择的硬件平台所对应的.config参数toolchain_arch的赋值
 [ "$2" = "armv8" ] && export platform="armv8" toolchain_arch="aarch64_generic"
 [ "$2" = "nanopi-r4s" ] && export platform="rk3399" toolchain_arch="aarch64_generic"
 [ "$2" = "nanopi-r5s" ] && export platform="rk3568" toolchain_arch="aarch64_generic"
 [ "$2" = "netgear_r8500" ] && export platform="bcm53xx" toolchain_arch="arm_cortex-a9"
 [ "$2" = "x86_64" ] && export platform="x86_64" toolchain_arch="x86_64"
 
-# gcc13 & 14 & 15
+# gcc13 & 14 & 15  # 三种编译器版本gcc_version的赋值选择
 if [ "$USE_GCC13" = y ]; then
     export USE_GCC13=y gcc_version=13
     # use mold
@@ -128,7 +128,7 @@ else
     export gcc_version=11
 fi
 
-# build.sh flags
+# build.sh flags    #批命令build.sh的变量参数展示
 export \
     ENABLE_BPF=$ENABLE_BPF \
     ENABLE_DPDK=$ENABLE_DPDK \
@@ -137,7 +137,7 @@ export \
     KERNEL_CLANG_LTO=$KERNEL_CLANG_LTO \
     TESTING_KERNEL=$TESTING_KERNEL \
 
-# kernel version
+# kernel version    # 若变量参数TESTING_KERNEL的值是“y”,linux内核版本选6.12，不然选6.6版本
 [ "$TESTING_KERNEL" = "y" ] && export kernel_version=6.12 || export kernel_version=6.6
 
 # print version
@@ -181,7 +181,7 @@ echo -e "${GREEN_COLOR}GCC VERSION: $gcc_version${RES}"
 [ "$MINIMAL_BUILD" = "y" ] && echo -e "${GREEN_COLOR}MINIMAL_BUILD: true${RES}" || echo -e "${GREEN_COLOR}MINIMAL_BUILD: false${RES}"
 [ "$KERNEL_CLANG_LTO" = "y" ] && echo -e "${GREEN_COLOR}KERNEL_CLANG_LTO: true${RES}\r\n" || echo -e "${GREEN_COLOR}KERNEL_CLANG_LTO:${RES} ${YELLOW_COLOR}false${RES}\r\n"
 
-# clean old files
+# clean old files  #清除可能存在的旧目录和旧目录中的文件，删整个临时目录openwrt和 master两个可能存在的目录
 rm -rf openwrt master
 
 # openwrt - releases
