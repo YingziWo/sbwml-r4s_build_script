@@ -86,19 +86,24 @@ jobs:
 
     # ----------------------------------------------------------------
     - name: 确认工作目录,转到openwrt目录下，为ssh连接创造条件
+      working-directory: /builder
       run: |
         pwd
-        ls -a
+        ls -la
+        cd openwrt
         mkdir -m 755 ./.ssh
-        ls -a
+        ls -la
         cd ./.ssh
         ls -a > test.txt
         ls -a
+        cd ..
    
     - name: SSH 连接到 Actions
+     
       uses: P3TERX/ssh2actions@main
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
       env:
+        working-directory: /builder
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 停止云编译
