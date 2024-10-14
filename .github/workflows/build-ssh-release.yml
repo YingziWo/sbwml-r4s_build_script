@@ -1,4 +1,4 @@
-name: Build releases
+name: Build ssh releases
 
 on:
   workflow_dispatch:
