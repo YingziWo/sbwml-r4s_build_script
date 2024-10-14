@@ -88,21 +88,21 @@ jobs:
     - name: 确认工作目录,转到openwrt目录下，为ssh连接创造条件
       run: |
         pwd
-        ls -la
+        ls -a
         cd runner
-        ls -la
+        ls -a
         pwd
         cd ..
         cd docker
-        ls -la
+        ls -a
         pwd
         cd ..
         exit 1
         
         #cd openwrt
-        #ls -la
+        #ls -a
         #cd /home/runner/work/sbwml-r4s_build_script/sbwml-r4s_build_script/openwrt
-        #ls -la
+        #ls -a
         #mkdir -m 755 ./.ssh
     
     - name: SSH 连接到 Actions
