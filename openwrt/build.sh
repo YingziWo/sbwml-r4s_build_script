@@ -184,11 +184,11 @@ echo -e "${GREEN_COLOR}GCC VERSION: $gcc_version${RES}"
 # clean old files  #清除可能存在的旧目录和旧目录中的文件，删整个临时目录openwrt和 master两个可能存在的目录
 rm -rf openwrt master
 
-# openwrt - releases
+# openwrt - releases  # 所有硬件平台缺省用的原码，dev用master分支，rc2用23.05.5分支，并克隆的同时建立了openwrt的目录
 [ "$(whoami)" = "runner" ] && group "source code"
 git clone --depth=1 https://$github/openwrt/openwrt -b $branch
 
-# openwrt master
+# openwrt master   #根据硬件平台的不同，若是rc2，则再克隆下面四个目录，同时建立了master目录和master下的四个分目录
 if [ "$1" = "rc2" ]; then
     git clone https://$github/openwrt/openwrt master/openwrt --depth=1
     git clone https://$github/openwrt/packages master/packages --depth=1
@@ -196,7 +196,7 @@ if [ "$1" = "rc2" ]; then
     git clone https://$github/openwrt/routing master/routing --depth=1
 fi
 
-# openwrt-23.05
+# openwrt-23.05    # 硬件平台是rc2，则在克隆一个openwrt-23.05的分支到master/openwrt-23.05中
 [ "$1" = "rc2" ] && git clone https://$github/openwrt/openwrt -b openwrt-23.05 master/openwrt-23.05 --depth=1
 
 # immortalwrt master
