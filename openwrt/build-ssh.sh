@@ -257,12 +257,14 @@ src-git telephony https://$github/openwrt/telephony.git$telephony
 EOF
 
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -279,12 +281,14 @@ fi
 [ "$(whoami)" = "runner" ] && endgroup
 
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -300,12 +304,14 @@ fi
 [ "$(whoami)" = "runner" ] && endgroup
 
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -322,12 +328,14 @@ if [ -f ../dl.gz ]; then
 fi
 
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -357,13 +365,16 @@ fi
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
 bash 00-prepare_base.sh
+
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -376,12 +387,14 @@ fi
 
 bash 01-prepare_base-mainline.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -394,12 +407,14 @@ fi
 
 bash 02-prepare_package.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -412,12 +427,14 @@ fi
 
 bash 03-convert_translation.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -430,12 +447,14 @@ fi
 
 bash 04-fix_kmod.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -448,12 +467,14 @@ fi
 
 bash 05-fix-source.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -466,12 +487,14 @@ fi
 
 [ -f "10-custom.sh" ] && bash 10-custom.sh
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -489,12 +512,14 @@ if [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ] && [ "$version" = "rc2" ]; t
     cp -a ../master/openwrt/toolchain/binutils toolchain/binutils
 fi
 # 检查指定目录是否存在
-if [ -d openwrt/package/new ]; then
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
    echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
    echo -e '\e[1;36m'
    ls -la openwrt/package/new
    echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
- if [ -d openwrt/package/new/custom ]; then
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
    echo -e '\e[1;31m'
    ls -la openwrt/package/new/custom
    echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
@@ -647,6 +672,25 @@ if [ "$BUILD_FAST" = "y" ]; then
 fi
 
 ls -a package
+
+# 检查指定目录是否存在
+SUBDIR="openwrt/package/new"
+if [ -d "$SUBDIR" ]; then
+   echo -e '\e[1;33mList openwrt/package/new 目录命令：\e[0m'
+   echo -e '\e[1;36m'
+   ls -la openwrt/package/new
+   echo -e '\e[1;33mList openwrt/package/new 目录命令结束。\e[0m'
+   SUBDIR1="openwrt/package/new/custom"
+ if [ -d "$SUBDIR1" ]; then
+   echo -e '\e[1;31m'
+   ls -la openwrt/package/new/custom
+   echo -e '\e[1;33mList目录 openwrt/package/new/custom 命令结束。\e[0m'
+ else
+   echo -e '\e[1;33m目录 openwrt/package/new/custom 不存在。\e[0m'
+ fi
+else
+  echo -e '\e[1;33m目录 openwrt/package/new 不存在。\e[0m'
+fi
 
 # init openwrt config
 rm -rf tmp/*
