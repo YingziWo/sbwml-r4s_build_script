@@ -123,39 +123,39 @@ jobs:
         name: ${{ github.event.inputs.device }}-openwrt-${{ env.latest_release }}
         path: ${{ env.WORKDIR }}/rom/*
 
-    #- name: Create release
-    #  continue-on-error: true
-    #  uses: ncipollo/release-action@v1
-    #  with:
-    #    name: OpenWrt-${{ env.latest_release }}
-    #    allowUpdates: true
-     #   tag: ${{ env.latest_release }}
-    #    commit: master
-     #   replacesArtifacts: true
-     #   token: ${{ secrets.REPO_TOKEN }}
-     #   artifacts: ${{ env.WORKDIR }}/rom/*
+    - name: Create release
+      continue-on-error: true
+      uses: ncipollo/release-action@v1
+      with:
+        name: OpenWrt-${{ env.latest_release }}
+        allowUpdates: true
+        tag: ${{ env.latest_release }}
+        commit: master
+        replacesArtifacts: true
+        token: ${{ secrets.REPO_TOKEN }}
+        artifacts: ${{ env.WORKDIR }}/rom/*
 
-    - name: Generate release tag
-      id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      run: |
-        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-        touch release.txt
-        [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
+    #- name: Generate release tag
+    #  id: tag
+    #  if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    #  run: |
+    #    echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+    #    touch release.txt
+    #    [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
        # echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: Upload firmware to release
-      continue-on-error: true
-      uses: softprops/action-gh-release@master
-      #if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-      with:
-        tag_name: ${{ env.latest_release }}
-        body_path: release.txt
-        files: ${{ env.WORKDIR }}/rom/*
-        body: |
-            ### 📒 编译固件信息
-            - 💻 平台架构: ${{ github.event.inputs.device }}                                                                 
-            - 🌐 默认地址: 10.0.0.1
-            - 🔑 默认密码: 空           
+    #- name: Upload firmware to release
+    #  continue-on-error: true
+    #  uses: softprops/action-gh-release@master
+    #  #if: steps.tag.outputs.status == 'success' && !cancelled()
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+    #  with:
+    #    tag_name: ${{ env.latest_release }}
+    #    body_path: release.txt
+    #    files: ${{ env.WORKDIR }}/rom/*
+    #    body: |
+    #        ### 📒 编译固件信息
+    #        - 💻 平台架构: ${{ github.event.inputs.device }}                                                                 
+    #        - 🌐 默认地址: 10.0.0.1
+    #        - 🔑 默认密码: 空           
