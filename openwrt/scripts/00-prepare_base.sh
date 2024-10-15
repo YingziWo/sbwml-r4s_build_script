@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
 # Rockchip - rkbin & u-boot
+set -x
+pwd
+ls -la
 rm -rf package/boot/rkbin package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
 if [ "$platform" = "rk3568" ]; then
     git clone https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip
