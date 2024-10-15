@@ -45,7 +45,7 @@ if [ "$(whoami)" = "runner" ] && [ -n "$GITHUB_REPO" ]; then
     export mirror=raw.githubusercontent.com/$GITHUB_REPO/master
 fi
 
-# private gitea   #私有 gitea 网址
+# private gitea   #私有 gitea 网址。这个项目除了openwrt平台用的是开源的openwrt原码和immortalwrt的packages的原码外，插件部分基本出自其私有的git.cooluc.com中，插件是在补丁环节过程中进行克隆自其私有的库中，原码性质不明有悖开源宗旨。既然前面已经区分了CN，插件理可由用户选择是开源还是闭源。另外，在原码部分该项目也进行了大量的补丁，其作用？？
 export gitea=git.cooluc.com
 
 # github mirror   #判断云编译的工作区域引用不同的镜像网址，分为cn区域和非cn区域两块
