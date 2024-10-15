@@ -3,6 +3,10 @@
 # Fix build for linux-6.6/6.12
 
 # cryptodev-linux
+set -x
+pwd
+ls -la
+
 if [ "$version" = "rc2" ]; then
     mkdir -p package/kernel/cryptodev-linux/patches
     curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/001-Fix-build-for-Linux-6.3-rc1.patch > package/kernel/cryptodev-linux/patches/001-Fix-build-for-Linux-6.3-rc1.patch
