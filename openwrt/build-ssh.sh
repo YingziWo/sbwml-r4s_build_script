@@ -215,9 +215,9 @@ fi
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 
@@ -250,9 +250,9 @@ EOF
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 # Init feeds
@@ -262,9 +262,9 @@ echo -e '\e[0m'
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 [ "$(whoami)" = "runner" ] && group "feeds install -a"
@@ -273,9 +273,9 @@ echo -e '\e[0m'
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 # loader dl
@@ -285,9 +285,9 @@ fi
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 ###############################################
@@ -312,57 +312,57 @@ bash 00-prepare_base.sh
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 bash 01-prepare_base-mainline.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 bash 02-prepare_package.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 bash 03-convert_translation.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 bash 04-fix_kmod.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 bash 05-fix-source.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 [ -f "10-custom.sh" ] && bash 10-custom.sh
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 [ "$(whoami)" = "runner" ] && endgroup
@@ -373,9 +373,9 @@ if [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ] && [ "$version" = "rc2" ]; t
 fi
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 
@@ -500,9 +500,9 @@ fi
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 # Toolchain Cache
@@ -530,9 +530,9 @@ ls -a
 
 # 查看指定目录是否存在了
 echo -e '\e[1;33m'
-ls -la openwrt/package/new
+ls -la /builder/openwrt/package/new
 echo -e '\e[1;36m'
-ls -la openwrt/package/new/custom
+ls -la /builder/openwrt/package/new/custom
 echo -e '\e[0m'
 
 # init openwrt config
