@@ -508,6 +508,12 @@ fi
 
 pwd
 ls -a
+ls -la package
+
+rm -f 0*-*.sh 10-custom.sh
+rm -rf ../master
+
+ls -a
 
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
@@ -639,6 +645,8 @@ if [ "$BUILD_FAST" = "y" ]; then
     find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
     find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
 fi
+
+ls -a package
 
 # init openwrt config
 rm -rf tmp/*
