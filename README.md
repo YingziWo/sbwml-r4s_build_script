@@ -1,6 +1,8 @@
 # NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
 
-### 存档来自：https://init2.cooluc.com
+### 存档来自：https://init2.cooluc.com   --注：本仓库使用的插件来自闭源的：https://git.cooluc.com
+
+该仓库除了openwrt平台用的是开源的openwrt原码和immortalwrt的部分原码外，插件部分基本出自其私有的git.cooluc.com中，插件的增加在补丁环节过程中进行，增减比较繁琐。原码部分项目也大量补丁。
 
 ---------------
 
