@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # libsodium - fix build with lto (GNU BUG - 89147)
+set -x
+pwd
+ls -la
+
 sed -i "/CONFIGURE_ARGS/i\TARGET_CFLAGS += -ffat-lto-objects\n" feeds/packages/libs/libsodium/Makefile
 
 # grub2 -  disable `gc-sections` flag
