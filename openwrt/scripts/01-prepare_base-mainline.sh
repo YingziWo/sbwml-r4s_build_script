@@ -3,6 +3,9 @@
 #################################################################
 
 # autocore
+set -x
+pwd
+ls -la
 if [ "$version" = "rc2" ]; then
     git clone https://$github/sbwml/autocore-arm -b openwrt-23.05 package/system/autocore
 else
