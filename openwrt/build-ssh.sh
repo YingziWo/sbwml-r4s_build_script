@@ -509,6 +509,143 @@ fi
 pwd
 ls -a
 
+# Load devices Config
+if [ "$platform" = "x86_64" ]; then
+    curl -s https://$mirror/openwrt/23-config-musl-x86 > .config
+elif [ "$platform" = "bcm53xx" ]; then
+    if [ "$MINIMAL_BUILD" = "y" ]; then
+        curl -s https://$mirror/openwrt/23-config-musl-r8500-minimal > .config
+    else
+        curl -s https://$mirror/openwrt/23-config-musl-r8500 > .config
+    fi
+elif [ "$platform" = "rk3568" ]; then
+    curl -s https://$mirror/openwrt/23-config-musl-r5s > .config
+elif [ "$platform" = "armv8" ]; then
+    curl -s https://$mirror/openwrt/23-config-musl-armsr-armv8 > .config
+else
+    curl -s https://$mirror/openwrt/23-config-musl-r4s > .config
+fi
 
+# config-common
+if [ "$MINIMAL_BUILD" = "y" ]; then
+    [ "$platform" != "bcm53xx" ] && curl -s https://$mirror/openwrt/23-config-minimal-common >> .config
+    echo 'VERSION_TYPE="minimal"' >> package/base-files/files/usr/lib/os-release
+else
+    [ "$platform" != "bcm53xx" ] && curl -s https://$mirror/openwrt/23-config-common >> .config
+    [ "$platform" = "armv8" ] && sed -i '/DOCKER/Id' .config
+fi
+
+# config-firmware
+[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
+
+# ota
+[ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
+
+# bpf
+[ "$ENABLE_BPF" = "y" ] && curl -s https://$mirror/openwrt/generic/config-bpf >> .config
+
+# LTO
+export ENABLE_LTO=$ENABLE_LTO
+[ "$ENABLE_LTO" = "y" ] && curl -s https://$mirror/openwrt/generic/config-lto >> .config
+
+# glibc
+[ "$ENABLE_GLIBC" = "y" ] && {
+    curl -s https://$mirror/openwrt/generic/config-glibc >> .config
+    sed -i '/NaiveProxy/d' .config
+}
+
+# DPDK
+[ "$ENABLE_DPDK" = "y" ] && {
+    echo 'CONFIG_PACKAGE_dpdk-tools=y' >> .config
+    echo 'CONFIG_PACKAGE_numactl=y' >> .config
+}
+
+# mold
+[ "$ENABLE_MOLD" = "y" ] && echo 'CONFIG_USE_MOLD=y' >> .config
+
+# kernel - CLANG + LTO; Allow CONFIG_KERNEL_CC=clang / clang-18 / clang-xx
+if [ "$KERNEL_CLANG_LTO" = "y" ]; then
+    echo '# Kernel - CLANG LTO' >> .config
+    echo 'CONFIG_KERNEL_CC="clang"' >> .config
+    echo 'CONFIG_EXTRA_OPTIMIZATION=""' >> .config
+    echo '# CONFIG_PACKAGE_kselftests-bpf is not set' >> .config
+fi
+
+# kernel - enable LRNG
+if [ "$ENABLE_LRNG" = "y" ]; then
+    echo -e "\n# Kernel - LRNG" >> .config
+    echo "CONFIG_KERNEL_LRNG=y" >> .config
+    echo "# CONFIG_PACKAGE_urandom-seed is not set" >> .config
+    echo "# CONFIG_PACKAGE_urngd is not set" >> .config
+fi
+
+# local kmod
+if [ "$ENABLE_LOCAL_KMOD" = "y" ]; then
+    echo -e "\n# local kmod" >> .config
+    echo "CONFIG_TARGET_ROOTFS_LOCAL_PACKAGES=y" >> .config
+fi
+
+# openwrt-23.05 gcc11/13/14/15
+[ "$(whoami)" = "runner" ] && group "patching toolchain"
+if [ "$1" = "rc2" ]; then
+    if [ "$USE_GCC13" = "y" ] || [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ]; then
+        curl -s https://$mirror/openwrt/patch/generic/200-toolchain-gcc-update-to-13.2.patch | patch -p1
+        curl -s https://$mirror/openwrt/patch/generic/201-toolchain-gcc-add-support-for-GCC-14.patch | patch -p1
+        curl -s https://$mirror/openwrt/patch/generic/202-toolchain-gcc-add-support-for-GCC-15.patch | patch -p1
+        # gcc14/15 init
+        cp -a toolchain/gcc/patches-13.x toolchain/gcc/patches-14.x
+        curl -s https://$mirror/openwrt/patch/generic/gcc-14/910-mbsd_multi.patch > toolchain/gcc/patches-14.x/910-mbsd_multi.patch
+        cp -a toolchain/gcc/patches-14.x toolchain/gcc/patches-15.x
+        curl -s https://$mirror/openwrt/patch/generic/gcc-15/970-macos_arm64-building-fix.patch > toolchain/gcc/patches-15.x/970-macos_arm64-building-fix.patch
+    elif [ ! "$ENABLE_GLIBC" = "y" ]; then
+        curl -s https://$mirror/openwrt/generic/config-gcc11 >> .config
+    fi
+else
+    cp -a toolchain/gcc/patches-14.x toolchain/gcc/patches-15.x
+    curl -s https://$mirror/openwrt/patch/generic-24.10/202-toolchain-gcc-add-support-for-GCC-15.patch | patch -p1
+fi
+[ "$USE_GCC13" = "y" ] && curl -s https://$mirror/openwrt/generic/config-gcc13 >> .config
+[ "$USE_GCC14" = "y" ] && curl -s https://$mirror/openwrt/generic/config-gcc14 >> .config
+[ "$USE_GCC15" = "y" ] && curl -s https://$mirror/openwrt/generic/config-gcc15 >> .config
+[ "$(whoami)" = "runner" ] && endgroup
+
+# uhttpd
+[ "$ENABLE_UHTTPD" = "y" ] && sed -i '/nginx/d' .config && echo 'CONFIG_PACKAGE_ariang=y' >> .config
+
+# test kernel
+[ "$TESTING_KERNEL" = "y" ] && [ "$platform" = "bcm53xx" ] && sed -i '1i\# CONFIG_PACKAGE_kselftests-bpf is not set\n# CONFIG_PACKAGE_perf is not set\n' .config
+[ "$TESTING_KERNEL" = "y" ] && sed -i '1i\# Test kernel\nCONFIG_TESTING_KERNEL=y\n' .config
+
+# not all kmod
+[ "$NO_KMOD" = "y" ] && sed -i '/CONFIG_ALL_KMODS=y/d; /CONFIG_ALL_NONSHARED=y/d' .config
+
+# Toolchain Cache
+if [ "$BUILD_FAST" = "y" ]; then
+    [ "$ENABLE_GLIBC" = "y" ] && LIBC=glibc || LIBC=musl
+    [ "$isCN" = "CN" ] && github_proxy="ghp.ci/" || github_proxy=""
+    echo -e "\n${GREEN_COLOR}Download Toolchain ...${RES}"
+    PLATFORM_ID=""
+    [ -f /etc/os-release ] && source /etc/os-release
+    if [ "$PLATFORM_ID" = "platform:el9" ]; then
+        TOOLCHAIN_URL="http://127.0.0.1:8080"
+    else
+        TOOLCHAIN_URL=https://"$github_proxy"github.com/sbwml/openwrt_caches/releases/download/${openwrt_version}
+    fi
+    curl -L ${TOOLCHAIN_URL}/toolchain_${LIBC}_${toolchain_arch}_gcc-${gcc_version}.tar.zst -o toolchain.tar.zst $CURL_BAR
+    echo -e "\n${GREEN_COLOR}Process Toolchain ...${RES}"
+    tar -I "zstd" -xf toolchain.tar.zst
+    rm -f toolchain.tar.zst
+    mkdir bin
+    find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
+    find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
+fi
+
+# init openwrt config
+rm -rf tmp/*
+if [ "$BUILD" = "n" ]; then
+    exit 0
+else
+    make defconfig
+fi
 
 # 很少有人会告诉你为什么要这样做，而是会要求你必须要这样做。
