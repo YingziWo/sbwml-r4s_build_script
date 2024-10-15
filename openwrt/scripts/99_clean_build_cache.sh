@@ -1,3 +1,8 @@
+
+set -x
+pwd
+ls -la
+
 rm -rf bin
 rm -rf build_dir/target-aarch64_generic_musl/root-rockchip build_dir/target-x86_64_musl/root-x86 build_dir/target-arm_cortex-a9_musl_eabi/root-bcm53xx
 rm -rf build_dir/target-aarch64_generic_musl/root.orig-rockchip build_dir/target-x86_64_musl/root.orig-x86 build_dir/target-arm_cortex-a9_musl_eabi/root.orig-bcm53xx
