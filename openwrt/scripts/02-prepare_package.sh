@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
 # golang 1.23
+set -x
+pwd
+ls -la
 rm -rf feeds/packages/lang/golang
 git clone https://$github/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
